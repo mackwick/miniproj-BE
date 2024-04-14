@@ -1,0 +1,28 @@
+datasource db {
+provider = "postgresql"
+url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
+}
+
+model Author {
+ id Int @id @default(autoincrement())
+ createdAt DateTime @default(now())
+ updateAt DateTime @updatedAt
+ firstName String
+ lastName String
+ Book Book[]
+}
+
+model Book {
+  id Int @id @default(autoincrement())
+ createdAt DateTime @default(now())
+ updateAt DateTime @updatedAt
+ title String
+ isFiction Boolean
+ author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+ authorId Int
+}
