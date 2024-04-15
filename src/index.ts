@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 
+import { authorRouter } from "./author/author.router";
+
 dotenv.config();
 
 //if there is not port to find, exit the application
@@ -16,6 +18,7 @@ const app = express();
 //MIDDLEWARE
 app.use(cors());
 app.use(express.json());
+app.use("/api/authors", authorRouter);
 
 //ROUTES
 
