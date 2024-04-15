@@ -17,6 +17,15 @@ authorRouter.get("/", async (req: Request, res: Response) => {
 });
 
 //DELETE
+authorRouter.delete("/:id", async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id);
+  try {
+    await AuthorService.deleteAuthor(id);
+    return res.status(204).json("Author has been deleted");
+  } catch (error: any) {
+    return res.status(500).json(error.message);
+  }
+});
 
 //UPDATE
 authorRouter.put("/:id", async (req: Request, res: Response) => {
