@@ -31,7 +31,7 @@ authorRouter.delete("/:id", async (req: Request, res: Response) => {
 authorRouter.put("/:id", async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return response.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ errors: errors.array() });
   }
   const id: number = parseInt(req.params.id, 10);
   try {
