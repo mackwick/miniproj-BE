@@ -19,6 +19,20 @@ authorRouter.get("/", async (req: Request, res: Response) => {
 //DELETE
 
 //UPDATE
+authorRouter.put("/:id", async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return response.status(400).json({ errors: errors.array() });
+  }
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const author = req.body;
+    const updatedAuthor = await AuthorService.updateAuthor(author, id);
+    return res.status(200).json(updatedAuthor);
+  } catch (error: any) {
+    return res.status(500).json(error.message);
+  }
+});
 
 //CREATE - params: first name and last name
 authorRouter.post("/", async (req: Request, res: Response) => {
