@@ -18,12 +18,15 @@ bookRouter.get("/", async (req: Request, res: Response) => {
 });
 
 //DELETE
-// bookRouter.delete("/id", async (req: Request, res: Response) => {
-//   try {
-//   } catch (error: any) {
-//     return res.status(500).json(error.message);
-//   }
-// });
+bookRouter.delete("/:id", async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id);
+  try {
+    await BookService.deleteBook(id);
+    return res.json("delete complete");
+  } catch (error: any) {
+    return res.status(500).json(error.message);
+  }
+});
 
 //UPDATE
 bookRouter.put("/:id", async (req: Request, res: Response) => {
@@ -31,7 +34,7 @@ bookRouter.put("/:id", async (req: Request, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const id = parseInt(req.params.id);
+  const id: number = parseInt(req.params.id);
   try {
     const updatedBook = await BookService.updateBook(req.body, id);
     return res.status(201).json(updatedBook);
